@@ -69,7 +69,8 @@ public class LinkedList {
         if (index < 0) {
             throw new IndexOutOfBoundsException();
         } else {
-            // you always start at the head(or tail) because thoose are the only references you can directly access
+            // you always start at the head because that is the only reference you can directly access
+            // can't start at the tail because you only have a reference to the NEXT node!
             Node current = head;
             for (int i = 0; i < index; i++) {
                 if (current == null || current.next == null) {
@@ -78,6 +79,55 @@ public class LinkedList {
                 current = current.next;
             }
             return current.value;
+        }
+    }
+
+    public void removeFromFront() {
+        if (head != null) {
+            head = head.next;
+        }
+        if (head == null) { // either the list was empty or we just removed the last element
+            tail = null;
+        }
+    }
+
+    public void removeFromBack() {
+        if (head == null) { // empty list
+            return;
+        } else if (head == tail) { // only one element
+            head = null;
+            tail = null;
+        } else {
+            Node current = head;
+            while (current.next != tail) {
+                current = current.next;
+            }
+            tail = current;
+            current.next = null;
+        }
+    }
+
+    public void removeAtIndex(int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException();
+        } else if (index == 0) {
+            removeFromFront();
+        } else {
+            Node current = head;
+            for (int i = 0; i < index - 1; i++) {
+                if (current == null || current.next == null) {
+                    throw new IndexOutOfBoundsException();
+                }
+                current = current.next;
+            }
+            if (current.next == null) {
+                throw new IndexOutOfBoundsException();
+            }
+
+            current.next = current.next.next;
+            if (current.next == null) {
+                tail = current;
+            }
         }
     }
 
