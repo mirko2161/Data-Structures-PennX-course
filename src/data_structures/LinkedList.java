@@ -48,6 +48,39 @@ public class LinkedList {
         }
     }
 
+    public void replaceHead(int value) {
+        Node newNode = new Node(value);
+        newNode.next = head.next;
+        head = newNode;
+    }
+
+    public boolean contains(int value) {
+        Node current = head;
+        while (current != null) { // the last node will point to null
+            if (current.value == value) {
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+
+    public int getByIndex(int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException();
+        } else {
+            // you always start at the head(or tail) because thoose are the only references you can directly access
+            Node current = head;
+            for (int i = 0; i < index; i++) {
+                if (current == null || current.next == null) {
+                    throw new IndexOutOfBoundsException();
+                }
+                current = current.next;
+            }
+            return current.value;
+        }
+    }
+
     class Node {
 
         int value;
@@ -58,7 +91,4 @@ public class LinkedList {
         }
     }
 
-    public static void main(String[] args) {
-        new LinkedList().addAtIndex(4, 5);
-    }
 }
