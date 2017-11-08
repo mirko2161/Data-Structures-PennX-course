@@ -15,7 +15,7 @@
 *.log
 
 # Package Files #
-*.jar
+#*.jar # need jar for homework tests
 *.war
 *.ear
 *.zip
