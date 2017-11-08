@@ -1,5 +1,6 @@
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 /**
  * Note: Homework tests require that the class being tested is in the default package.
@@ -31,7 +32,7 @@ import java.util.LinkedList;
  */
 public class LinkedListUtils {
 
-    // all 12 test pass
+    // all tests pass
     public static void insertSorted(LinkedList<Integer> list, int value) throws Exception {
         if (list == null) {
             return;
@@ -56,9 +57,34 @@ public class LinkedListUtils {
         /* IMPLEMENT THIS METHOD! */
     }
 
+    // all tests pass
     public static boolean containsSubsequence(LinkedList<Integer> one, LinkedList<Integer> two) {
+        if (one == null || two == null || one.isEmpty() || two.isEmpty()) {
+            return false;
+        }
+        if (one.size() < two.size()) {
+            return false;
+        }
 
-        /* IMPLEMENT THIS METHOD! */
-        return true; // this line is here only so this code will compile if you don't modify it
+        int counter = 0, startIndex = 0;
+        outer:
+        for (int i = 0; i < one.size(); i++) {
+            for (int j = startIndex; j < two.size(); j++) {
+
+                if (Objects.equals(one.get(i), two.get(j))) {
+                    counter++;
+                    if (counter == two.size()) {
+                        return true;
+                    }
+                    startIndex = j + 1; // for next i start from the next element in second list
+                    continue outer;
+                } else {
+                    counter = 0;
+                    startIndex = 0;
+                }
+            }
+        }
+        return false;
     }
+
 }
