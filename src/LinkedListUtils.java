@@ -52,9 +52,30 @@ public class LinkedListUtils {
         }
     }
 
-    public static void removeMaximumValues(LinkedList<String> list, int N) {
+    // all tests pass
+    public static void removeMaximumValues(LinkedList<String> list, int numToRemove) {
+        if (list == null || list.isEmpty() || numToRemove < 0) {
+            return;
+        }
+        if (numToRemove >= list.size()) {
+            list.clear();
+            return;
+        }
+        for (int i = 0; i < numToRemove; i++) {
+            String largest = list.get(i);
+            LinkedList<String> allTheLargest = new LinkedList<>();
 
-        /* IMPLEMENT THIS METHOD! */
+            for (int j = 0; j < list.size(); j++) {
+                if (list.get(j).compareTo(largest) == 0) { // same as largest
+                    allTheLargest.add(list.get(j));
+                } else if (list.get(j).compareTo(largest) > 0) { // new largest, empty the list then add
+                    allTheLargest.clear();
+                    allTheLargest.add(list.get(j));
+                }
+            }
+            list.removeAll(allTheLargest);
+        }
+
     }
 
     // all tests pass
