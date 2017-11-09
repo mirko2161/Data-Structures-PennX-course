@@ -47,9 +47,25 @@ import java.util.Stack;
 public class HtmlValidator {
 
     public static Stack<HtmlTag> isValidHtml(Queue<HtmlTag> tags) {
+        Stack<HtmlTag> stack = new Stack<>();
 
-        /* IMPLEMENT THIS METHOD! */
-        return null; // this line is here only so this code will compile if you don't modify it
+        for (HtmlTag tag : tags) {
+            if (tag.isOpenTag()) {
+                stack.push(tag);
+            } else if (tag.isSelfClosing()) {
+                // self-closing and should not be placed on the Stack
+            } else {
+                if (!stack.empty() && stack.peek().matches(tag)) {
+                    stack.pop(); // tag correctly closed
+                } else {
+                    if (stack.empty()) { // HTML file containing only closing tag
+                        return null;
+                    }
+                    break; // HTML file not well formatted - return current stack
+                }
+            }
+        } // if all tags correct, an empty stack is returned
+        return stack;
     }
 
 }
