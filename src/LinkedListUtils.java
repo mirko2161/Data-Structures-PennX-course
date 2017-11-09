@@ -3,7 +3,8 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 /**
- * Note: Homework tests require that the class being tested is in the default package.
+ * Note: Homework tests require that the class being tested is in the default package, and also that
+ * the test files and .jar are in the root directory.
  *
  * SD2x Homework #1 Implement the methods below according to the specification in the assignment
  * description. Please be sure not to change the signature of any of the methods!
