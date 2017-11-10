@@ -43,6 +43,8 @@ import java.util.Stack;
  *
  * SD2x Homework #2 Implement the method below according to the specification in the assignment
  * description. Please be sure not to change the method signature!
+ *
+ * @author mirko
  */
 public class HtmlValidator {
 

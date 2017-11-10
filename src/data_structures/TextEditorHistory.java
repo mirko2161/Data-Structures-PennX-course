@@ -5,7 +5,6 @@ import java.util.Stack;
 /**
  * A simple use case of a stack - the undo functionality of a text editor.
  *
- * @author mirko
  */
 public class TextEditorHistory {
 

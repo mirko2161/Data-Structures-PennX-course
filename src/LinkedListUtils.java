@@ -30,6 +30,8 @@ import java.util.Objects;
  * elements of the second in the same order with no other elements in the sequence, i.e. it should
  * return true if the second LinkedList is a subsequence of the first, and false if it is not. The
  * method should return false if either input is null or empty.
+ *
+ * @author mirko
  */
 public class LinkedListUtils {
 

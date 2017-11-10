@@ -5,7 +5,6 @@ import java.util.LinkedList;
 /**
  * Basic core implementation of a stack data structure.
  *
- * @author mirko
  */
 public class Stack {
 
