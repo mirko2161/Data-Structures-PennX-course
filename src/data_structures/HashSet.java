@@ -1,15 +1,21 @@
 package data_structures;
 
+import java.util.LinkedList;
+
 /**
- * Basic hash set implementation.
+ * Basic hash set implementation using separate chaining to avoid collisions.
  *
  */
 public class HashSet {
 
-    private String[] values;
+    // all the elements with the same hash will be together in a bucket
+    private LinkedList<String>[] buckets;
 
     public HashSet(int size) {
-        this.values = new String[size];
+        this.buckets = new LinkedList[size];
+        for (int i = 0; i < size; i++) {
+            buckets[i] = new LinkedList<>();
+        }
     }
 
     /**
@@ -20,17 +26,19 @@ public class HashSet {
     }
 
     public boolean add(String value) {
-        int index = hashCode(value) % values.length; // mod to prevent going outside of array range
-        if (values[index] == null) {
-            values[index] = value;
+        if (!contains(value)) {
+            int index = hashCode(value) % buckets.length; // mod to prevent going outside of array range
+            LinkedList<String> bucket = buckets[index];
+            bucket.addFirst(value);
             return true;
         }
         return false;
     }
 
     public boolean contains(String value) {
-        int index = hashCode(value) % values.length;
-        return value.equals(values[index]);
+        int index = hashCode(value) % buckets.length;
+        LinkedList<String> bucket = buckets[index];
+        return bucket.contains(value);
     }
 
 }
