@@ -1,4 +1,11 @@
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -106,13 +113,59 @@ import java.util.Set;
  */
 public class Analyzer {
 
-    /*
-     * Implement this method in Part 1
+    /**
+     * Parses a text file and for every valid line creates a Sentence object.
+     *
+     * @param filename the fully qualified name of the file to parse
+     * @return a list of valid sentences from the file or empty list if the file is null or can not
+     * be read
      */
     public static List<Sentence> readFile(String filename) {
+        List<Sentence> sentences = new ArrayList<>();
+        if (filename == null) {
+            return sentences;
+        }
+        Path file = Paths.get(filename);
+        try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
 
-        /* IMPLEMENT THIS METHOD! */
-        return null; // this line is here only so this code will compile if you don't modify it
+                if (isValidSentence(line)) {
+                    int score = Integer.parseInt(line.substring(0, 2).trim());
+                    String text = line.substring(line.indexOf(' ') + 1);
+                    sentences.add(new Sentence(score, text));
+                }
+            }
+        } catch (IOException x) {
+            return sentences;
+        }
+        return sentences;
+    }
+
+    /**
+     * Determines if the string can represent a valid Sentence object.
+     *
+     * @param sentence the sentence to test
+     * @return true if the string can represent a valid Sentence, false otherwise
+     */
+    private static boolean isValidSentence(String sentence) {
+        if (sentence.length() < 3) {
+            return false;
+        }
+        int offset = (sentence.charAt(0) == '-') ? 1 : 0;
+        if (Character.isDigit(sentence.charAt(0 + offset))) {
+            int score = Integer.parseInt(sentence.substring(0, 2).trim());
+            if (score < -2 || score > 2) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        if (!Character.isSpaceChar(sentence.charAt(1 + offset))
+                || !Character.isLetter(sentence.charAt(2 + offset))) {
+            return false;
+        }
+        return true;
     }
 
     /*

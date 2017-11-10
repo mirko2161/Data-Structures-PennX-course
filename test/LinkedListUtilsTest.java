@@ -8,6 +8,7 @@ public class LinkedListUtilsTest {
      */
     @Test
     public void testStarter() {
+        // See STANDARD OUTPUT for results of the tests
         Homework1Grader.main(new String[]{});
     }
 
