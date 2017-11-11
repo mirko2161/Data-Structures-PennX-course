@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -168,13 +170,39 @@ public class Analyzer {
         return true;
     }
 
-    /*
-     * Implement this method in Part 2
+    /**
+     * Finds all of the individual words of each Sentence in the List and creates Word objects for
+     * each distinct word. The Word objects keep track of the number of occurrences of that word in
+     * all Sentences, and the total cumulative score of all Sentences in which it appears.
+     *
+     * @param sentences the Sentence object from which to extract words
+     * @return a Set of valid Words from the sentences or an empty set if the sentences list is null
+     * or empty
      */
     public static Set<Word> allWords(List<Sentence> sentences) {
+        if (sentences == null || sentences.isEmpty()) {
+            return new HashSet<>();
+        }
+        HashMap<Integer, Word> wordMap = new HashMap<>(sentences.size() * 3);
+        for (Sentence sentence : sentences) {
+            if (sentence != null) {
+                String[] stringWords = sentence.text.toLowerCase().split(" ");
+                for (String stringWord : stringWords) {
+                    if (Character.isLetter(stringWord.charAt(0))) {
+                        Word word = new Word(stringWord);
+                        word.increaseTotal(sentence.getScore()); // also increments count
+                        int key = word.hashCode();
 
-        /* IMPLEMENT THIS METHOD! */
-        return null; // this line is here only so this code will compile if you don't modify it
+                        if (wordMap.containsKey(key)) {
+                            wordMap.get(key).increaseTotal(sentence.getScore());
+                        } else {
+                            wordMap.put(key, word);
+                        }
+                    }
+                }
+            }
+        }
+        return new HashSet<>(wordMap.values());
     }
 
     /*
