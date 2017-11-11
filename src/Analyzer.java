@@ -181,7 +181,7 @@ public class Analyzer {
      */
     public static Set<Word> allWords(List<Sentence> sentences) {
         if (sentences == null || sentences.isEmpty()) {
-            return new HashSet<>();
+            return new HashSet<>(0);
         }
         HashMap<Integer, Word> wordMap = new HashMap<>(sentences.size() * 3);
         for (Sentence sentence : sentences) {
@@ -205,13 +205,25 @@ public class Analyzer {
         return new HashSet<>(wordMap.values());
     }
 
-    /*
-     * Implement this method in Part 3
+    /**
+     * Calculates the average sentiment score for a Word, and then places the text of the Word (as
+     * key) and calculated score (as value) in a Map.
+     *
+     * @param words the Word objects whose score to calculate
+     * @return a map of the words and their sentiment scores or an empty map if the word list is
+     * null or empty
      */
     public static Map<String, Double> calculateScores(Set<Word> words) {
-
-        /* IMPLEMENT THIS METHOD! */
-        return null; // this line is here only so this code will compile if you don't modify it
+        if (words == null || words.isEmpty()) {
+            return new HashMap<>(0);
+        }
+        HashMap<String, Double> wordMap = new HashMap<>(words.size());
+        for (Word word : words) {
+            if (word != null) {
+                wordMap.put(word.getText(), word.calculateScore());
+            }
+        }
+        return wordMap;
     }
 
     /*
