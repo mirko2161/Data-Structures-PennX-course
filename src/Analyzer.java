@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -186,7 +185,7 @@ public class Analyzer {
         HashMap<Integer, Word> wordMap = new HashMap<>(sentences.size() * 3);
         for (Sentence sentence : sentences) {
             if (sentence != null) {
-                String[] stringWords = sentence.text.toLowerCase().split(" ");
+                String[] stringWords = sentence.getText().toLowerCase().split(" ");
                 for (String stringWord : stringWords) {
                     if (Character.isLetter(stringWord.charAt(0))) {
                         Word word = new Word(stringWord);
@@ -226,34 +225,31 @@ public class Analyzer {
         return wordMap;
     }
 
-    /*
-     * Implement this method in Part 4
+    /**
+     * This method uses the given mapping to calculate and return the average score of all the words
+     * in the input sentence.
+     *
+     * @param wordScores the mapping of words to their average sentiment score
+     * @param sentence the string whose score to calculate
+     * @return the average score of all the words in the input sentence
      */
     public static double calculateSentenceScore(Map<String, Double> wordScores, String sentence) {
-
-        /* IMPLEMENT THIS METHOD! */
-        return 0; // this line is here only so this code will compile if you don't modify it
-    }
-
-    /*
-     * This method is here to help you run your program.
-     * You may modify it as needed.
-     */
-    public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("Please specify the name of the input file");
-            System.exit(0);
+        if (wordScores == null || wordScores.isEmpty() || sentence == null || sentence.isEmpty()) {
+            return 0;
         }
-        String filename = args[0];
-        System.out.print("Please enter a sentence: ");
-        Scanner in = new Scanner(System.in);
-        String sentence = in.nextLine();
-        in.close();
-        List<Sentence> sentences = Analyzer.readFile(filename);
-        Set<Word> words = Analyzer.allWords(sentences);
-        Map<String, Double> wordScores = Analyzer.calculateScores(words);
-        double score = Analyzer.calculateSentenceScore(wordScores, sentence);
-        System.out.println("The sentiment score is " + score);
+        String[] stringWords = sentence.toLowerCase().split(" ");
+        boolean validWord = false;
+        int totalWords = 0;
+        double totalScore = 0;
+
+        for (String stringWord : stringWords) {
+            if (Character.isLetter(stringWord.charAt(0))) {
+                validWord = true;
+                totalWords++;
+                totalScore += wordScores.getOrDefault(stringWord, 0.0);
+            }
+        }
+        return (validWord) ? (totalScore / totalWords) : 0;
     }
 
 }
