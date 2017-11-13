@@ -211,10 +211,15 @@ public class BinarySearchTree<E extends Comparable<E>> {
     private int calculateHeight(Node n) {
         if (n.leftChild == null && n.rightChild == null) {
             return 0;
-        } else if (n.leftChild != null) {
-            return 1 + calculateHeight(n.leftChild);
         } else {
-            return 1 + calculateHeight(n.rightChild);
+            int leftDepth = 0, rightDepth = 0;
+            if (n.leftChild != null) {
+                leftDepth = 1 + calculateHeight(n.leftChild);
+            }
+            if (n.rightChild != null) {
+                rightDepth = 1 + calculateHeight(n.rightChild);
+            }
+            return leftDepth > rightDepth ? leftDepth : rightDepth;
         }
     }
 
