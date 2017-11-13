@@ -162,11 +162,32 @@ public class BinarySearchTree<E extends Comparable<E>> {
         }
     }
 
-    // Method #2.
+    /**
+     * Given a value, this method returns the “depth” of its Node, which is the number of ancestors
+     * between that node and the root, including the root but not the node itself.
+     *
+     * @param val value of the Node whose depth to find
+     * @return the depth of the desired Node, or -1 if the value is null or does not exist
+     */
     protected int depth(E val) {
+        if (val == null || !contains(val)) {
+            return -1;
+        } else {
+            return calculateDepth(root, val);
+        }
+    }
 
-        /* IMPLEMENT THIS METHOD! */
-        return -2; // this line is here only so this code will compile if you don't modify it
+    private int calculateDepth(Node n, E val) {
+        if (n == null) {
+            return 0;
+        }
+        if (n.value.equals(val)) {
+            return 0;
+        } else if (n.value.compareTo(val) > 0) {
+            return 1 + calculateDepth(n.leftChild, val);
+        } else {
+            return 1 + calculateDepth(n.rightChild, val);
+        }
     }
 
     // Method #3.
