@@ -190,11 +190,32 @@ public class BinarySearchTree<E extends Comparable<E>> {
         }
     }
 
-    // Method #3.
+    /**
+     * Given a value, this method returns the “height” of its Node, which is the greatest number of
+     * nodes between that node and any descendant node that is a leaf, including the leaf but not
+     * the node itself. The height of a leaf node (i.e., one which has no children) is defined to be
+     * 0.
+     *
+     * @param val value of the Node whose height to find
+     * @return the height of the desired Node, or -1 if the value is null or does not exist
+     */
     protected int height(E val) {
+        Node node = findNode(val);
+        if (node == null) {
+            return -1;
+        } else {
+            return calculateHeight(node);
+        }
+    }
 
-        /* IMPLEMENT THIS METHOD! */
-        return -2; // this line is here only so this code will compile if you don't modify it
+    private int calculateHeight(Node n) {
+        if (n.leftChild == null && n.rightChild == null) {
+            return 0;
+        } else if (n.leftChild != null) {
+            return 1 + calculateHeight(n.leftChild);
+        } else {
+            return 1 + calculateHeight(n.rightChild);
+        }
     }
 
     // Method #4.
