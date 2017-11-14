@@ -252,11 +252,30 @@ public class BinarySearchTree<E extends Comparable<E>> {
         return positiveDiff <= 1;
     }
 
-    // Method #5. .
+    /**
+     * Determines if all Nodes in the tree are balanced. Note that the root being balanced does not
+     * imply that the entire tree is balanced.
+     *
+     * @return true if all Nodes in the tree are balanced, false otherwise
+     */
     public boolean isBalanced() {
+        if (root == null) {
+            return true; // technically?
+        }
+        return inorderTraversal(root);
+    }
 
-        /* IMPLEMENT THIS METHOD! */
-        return false; // this line is here only so this code will compile if you don't modify it
+    private boolean inorderTraversal(Node n) {
+        if (n == null) {
+            return true;
+        }
+        boolean leftBalance = inorderTraversal(n.leftChild);
+        if (!isBalanced(n)) {
+            // a single false anyware in the recursion will cause the first call to return false
+            return false;
+        }
+        boolean rightBalance = inorderTraversal(n.rightChild);
+        return leftBalance && rightBalance;
     }
 
     class Node {
