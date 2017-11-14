@@ -212,22 +212,44 @@ public class BinarySearchTree<E extends Comparable<E>> {
         if (n.leftChild == null && n.rightChild == null) {
             return 0;
         } else {
-            int leftDepth = 0, rightDepth = 0;
+            int leftHeight = 0, rightHeight = 0;
             if (n.leftChild != null) {
-                leftDepth = 1 + calculateHeight(n.leftChild);
+                leftHeight = 1 + calculateHeight(n.leftChild);
             }
             if (n.rightChild != null) {
-                rightDepth = 1 + calculateHeight(n.rightChild);
+                rightHeight = 1 + calculateHeight(n.rightChild);
             }
-            return leftDepth > rightDepth ? leftDepth : rightDepth;
+            return leftHeight > rightHeight ? leftHeight : rightHeight;
         }
     }
 
-    // Method #4.
+    /**
+     * Given a Node, returns true if the Node is balanced, that is if the absolute value of the
+     * difference in heights of its left and right children is 0 or 1. Note that if a Node's child
+     * is null, then the height of that child should be considered as -1.
+     *
+     * @param n the Node whose balance to determine
+     * @return returns true if the absolute value of the difference in heights is 0 or 1, false
+     * otherwise, or if the Node is null or does not exist
+     */
     protected boolean isBalanced(Node n) {
+        if (n == null || !contains(n.value)) {
+            return false;
+        }
 
-        /* IMPLEMENT THIS METHOD! */
-        return true; // this line is here only so this code will compile if you don't modify it
+        int leftHeight, rightHeight;
+        if (n.leftChild == null) {
+            leftHeight = -1;
+        } else {
+            leftHeight = calculateHeight(n.leftChild);
+        }
+        if (n.rightChild == null) {
+            rightHeight = -1;
+        } else {
+            rightHeight = calculateHeight(n.rightChild);
+        }
+        int positiveDiff = Math.abs(leftHeight - rightHeight);
+        return positiveDiff <= 1;
     }
 
     // Method #5. .
